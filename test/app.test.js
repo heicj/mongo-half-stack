@@ -19,14 +19,17 @@ describe('dogs', () => {
         description: 'big red dog'
     };
 
-    it('saves dog', () => {
+    before(() => {
         return chai.request(app)
             .post('/dogs')
             .send(dog)
             .then(({ body }) => {
-                assert.ok(body._id);
                 dog = body;
             });
+    });
+
+    it('post adds a dog', () => {
+        assert.ok(dog._id);
     });
 
 });
