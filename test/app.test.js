@@ -32,4 +32,12 @@ describe('dogs', () => {
         assert.ok(dog._id);
     });
 
+    it('get dog by id', () => {
+        return chai.request(app)
+            .get(`/dogs/${dog._id}`)
+            .then(({ body }) => {
+                assert.deepEqual(body, dog);
+            });
+    });
+
 });
