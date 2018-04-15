@@ -40,4 +40,18 @@ describe('dogs', () => {
             });
     });
 
+    it('updates dog', () => {
+        dog.description = 'Big Red Dog';
+        return chai.request(app)
+            .put(`/dogs/${dog._id}`)
+            .send(dog)
+            .then(() => {
+                return chai.request(app)
+                    .get(`/dogs/${dog._id}`)
+                    .then(({ body }) => {
+                        assert.deepEqual(body, dog);
+                    });
+            });
+    });
+
 });
