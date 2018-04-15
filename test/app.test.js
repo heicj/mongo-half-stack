@@ -14,6 +14,8 @@ describe('dogs', () => {
         });
     });
 
+    after(() => mongo.client.close());
+
     let dog = {
         name: 'Clifford',
         description: 'big red dog'
