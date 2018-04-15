@@ -19,6 +19,11 @@ describe('dogs', () => {
         description: 'big red dog'
     };
 
+    let cujo = {
+        name: 'Cujo',
+        description: 'not too friendly'
+    }
+
     before(() => {
         return chai.request(app)
             .post('/dogs')
@@ -50,6 +55,20 @@ describe('dogs', () => {
                     .get(`/dogs/${dog._id}`)
                     .then(({ body }) => {
                         assert.deepEqual(body, dog);
+                    });
+            });
+    });
+
+    it('gets all dogs', () => {
+        return chai.request(app)
+            .post('/dogs')
+            .send(cujo)
+            .then(({ body }) => {
+                cujo = body;
+                return chai.request(app)
+                    .get('/dogs')
+                    .then(({ body }) => {
+                        assert.deepEqual(body, [dog, cujo]);
                     });
             });
     });
