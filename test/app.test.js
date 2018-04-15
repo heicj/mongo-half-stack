@@ -22,7 +22,7 @@ describe('dogs', () => {
     let cujo = {
         name: 'Cujo',
         description: 'not too friendly'
-    }
+    };
 
     before(() => {
         return chai.request(app)
@@ -69,6 +69,18 @@ describe('dogs', () => {
                     .get('/dogs')
                     .then(({ body }) => {
                         assert.deepEqual(body, [dog, cujo]);
+                    });
+            });
+    });
+
+    it('deletes dog by id', () => {
+        return chai.request(app)
+            .delete(`/dogs/${cujo._id}`)
+            .then(() => {
+                return chai.request(app)
+                    .get('/dogs')
+                    .then(({ body }) => {
+                        assert.deepEqual(body, [dog]);
                     });
             });
     });
